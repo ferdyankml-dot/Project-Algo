@@ -35,7 +35,7 @@
 
 	// untuk simpan file
 	void simpanData() {
-		ofstream file("data.txt");
+		ofstream file("data/data.txt");
 
 		Mahasiswa *temp = head;
 		while (temp != NULL) {
@@ -56,7 +56,7 @@
 
 	// proses memasukan data
 	void loadData() {
-		ifstream file("data.txt");
+		ifstream file("data/data.txt");
 
 		while (!file.eof()) {
 			Mahasiswa *baru = new Mahasiswa();
