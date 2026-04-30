@@ -1,0 +1,11 @@
+1|124250009|baharjos|l|cilacap|bahar@gmail.com|083104724091|3.9
+2|123456789|laras|p|jogja|ras@gmail.com|0987654321|3.5
+3|122223444|ferdyan|l|bantul|ferd@gmail.com|0987654321|2.7
+4|100999222|rakan|p|klaten|kan@gmail.com|0987654321|3.3
+5|100222222|cita|p|bandung|taa@gmail.com|0987654321|3.9
+6|100000000|elwa|p|malang|elll@gmail.com|0987654321|3.8
+7|222244444|lita|p|jogja|lita@gmail.com|0987654321|3.4
+8|145677777|sifa|p|jogja|sifa@gmail.com|0987654321|3.5
+9|133344333|nabila|p|jakarta|bil@gmail.com|0987654321|3.1
+10|234122222|micheel|p|semarang|chel@gmail.com|0987654321|3.6
+
