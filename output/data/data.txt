@@ -8,4 +8,6 @@
 8|145677777|sifa|p|jogja|sifa@gmail.com|0987654321|3.5
 9|133344333|nabila|p|jakarta|bil@gmail.com|0987654321|3.1
 10|234122222|micheel|p|semarang|chel@gmail.com|0987654321|3.6
-
+11|12425009|bhar|l|cilacap|baha@gmai.com|93938383|4
+12|122222|bahar|l|cilacap|baha@gmail.com|929292929|4
+13|124250018|ferdian|l|vsvs|bahg@gmail|3.4|4
