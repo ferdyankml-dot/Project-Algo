@@ -98,27 +98,44 @@
 
 	// tambaha data
 	void tambahData() {
-		Mahasiswa *baru = new Mahasiswa();
+		int jumlah;
+		cout << "berapa data yang mau dimasukkan: ";
+		cin >> jumlah;
 
-		baru->no = autoNo++;
+		for (int i = 0; i < jumlah; i++) {
+			cout << endl;
+			cout << "=== data ke-" << i+1 << " ===" << endl;
 
-		cout << "nim: "; cin >> baru->nim;
-		cout << "nama: "; cin.ignore(); getline(cin, baru->nama);
-		cout << "jenis kelamin (L/P): "; cin >> baru->jenis_kelamin;
-		cout << "domisili: "; cin.ignore(); getline(cin, baru->domisili);
-		cout << "email: "; cin >> baru->email;
-		cout << "no hp: "; cin >> baru->nohp;
-		cout << "ipk: "; cin >> baru->ipk;
-		
-		baru->next = NULL;
-		baru->prev = NULL;
+			Mahasiswa *baru = new Mahasiswa();
 
-		if (head == NULL) {
-			head = tail = baru;
-		} else {
-			tail->next = baru;
-			baru->prev = tail;
-			tail = baru;
+			baru->no = autoNo++;
+
+			cout << "nim: "; cin >> baru->nim;
+
+			cout << "nama: ";
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			getline(cin, baru->nama);
+
+			cout << "jenis kelamin (L/P): "; cin >> baru->jenis_kelamin;
+
+			cout << "domisili: ";
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			getline(cin, baru->domisili);
+
+			cout << "email: "; cin >> baru->email;
+			cout << "no hp: "; cin >> baru->nohp;
+			cout << "ipk: "; cin >> baru->ipk;
+
+			baru->next = NULL;
+			baru->prev = NULL;
+
+			if (head == NULL) {
+				head = tail = baru;
+			} else {
+				tail->next = baru;
+				baru->prev = tail;
+				tail = baru;
+			}
 		}
 
 		cout << endl;
@@ -177,10 +194,11 @@
 				cout << "===== DATA MAHASISWA =====" << endl;
 				lihatData();
 			} 
-			else if (pilih == 0) {
+			else if (pilih == 6) {
 				simpanData(); // simpan ke file
 				cout << endl;
-				cout << "trima kasih bolo" << endl;
+				cout << "trima kasih bolo sudah log out " << endl;
+				return 0;
 			} 
 			else {
 				cout << endl;
