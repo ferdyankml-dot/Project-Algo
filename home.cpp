@@ -145,6 +145,7 @@
 	// lihat data
 	void lihatData() {
 		Mahasiswa *temp = head;
+		int nomer = 1;
 
 		if (temp == NULL) {
 			cout << endl;
@@ -162,21 +163,104 @@
 		cout << "==============================================================" << endl;
 
 		while (temp != NULL) {
-			cout << left << setw(5) << temp->no
+			cout << left << setw(5) << nomer//temp->no
 				 << setw(15) << temp->nim
 				 << setw(20) << temp->nama
 				 << setw(5) << temp->jenis_kelamin
 				 << setw(10) << temp->ipk << endl;
 
 			temp = temp->next;
+			nomer++;
 		}
 
 		cout << "==============================================================" << endl;
 	}
 
+
+
+	void bubbleSortA();
+	void bubbleSortD();
+	void quickSortAsc(Mahasiswa* low, Mahasiswa* high);
+	void quickSortDesc(Mahasiswa* low, Mahasiswa* high);
+	bool kembali();
+
+	//fungsi quic sort asc
+	Mahasiswa* partitionAsc(Mahasiswa* low, Mahasiswa* high) {
+    string pivot = high->nim;
+    Mahasiswa* i = low->prev;
+
+    for (Mahasiswa* j = low; j != high; j = j->next) {
+        if (j->nim <= pivot) {
+            i = (i == NULL) ? low : i->next;
+
+            // swap data
+            swap(i->nim, j->nim);
+            swap(i->nama, j->nama);
+            swap(i->jenis_kelamin, j->jenis_kelamin);
+            swap(i->domisili, j->domisili);
+            swap(i->email, j->email);
+            swap(i->nohp, j->nohp);
+            swap(i->ipk, j->ipk);
+        }
+    }
+
+    i = (i == NULL) ? low : i->next;
+
+    // swap pivot
+    swap(i->nim, high->nim);
+    swap(i->nama, high->nama);
+    swap(i->jenis_kelamin, high->jenis_kelamin);
+    swap(i->domisili, high->domisili);
+    swap(i->email, high->email);
+    swap(i->nohp, high->nohp);
+    swap(i->ipk, high->ipk);
+
+    return i;
+	}
+
+	Mahasiswa* partitionDesc(Mahasiswa* low, Mahasiswa* high) {
+    string pivot = high->nim;
+    Mahasiswa* i = low->prev;
+
+    for (Mahasiswa* j = low; j != high; j = j->next) {
+        if (j->nim >= pivot) {  // <-- dibalik
+            i = (i == NULL) ? low : i->next;
+
+            // swap data
+            swap(i->nim, j->nim);
+            swap(i->nama, j->nama);
+            swap(i->jenis_kelamin, j->jenis_kelamin);
+            swap(i->domisili, j->domisili);
+            swap(i->email, j->email);
+            swap(i->nohp, j->nohp);
+            swap(i->ipk, j->ipk);
+        }
+    }
+
+    i = (i == NULL) ? low : i->next;
+
+    // swap pivot
+    swap(i->nim, high->nim);
+    swap(i->nama, high->nama);
+    swap(i->jenis_kelamin, high->jenis_kelamin);
+    swap(i->domisili, high->domisili);
+    swap(i->email, high->email);
+    swap(i->nohp, high->nohp);
+    swap(i->ipk, high->ipk);
+
+    return i;
+}
+
+
+	Mahasiswa* getTail(Mahasiswa* head) {
+    while (head != NULL && head->next != NULL)
+        head = head->next;
+    return head;
+	}
+
 	// main
 	int main() {
-		int pilih;
+		int pilih, pilih2, pilih3;
 
 		loadData(); // ambil data dari file
 
@@ -193,7 +277,77 @@
 				cout << endl;
 				cout << "===== DATA MAHASISWA =====" << endl;
 				lihatData();
-			} 
+			}
+			else if (pilih == 4) {
+				do{
+					cout << "\n==== URUTKAN DATA ====" << endl;
+					cout << endl;
+					cout << "Mau urutkan berdasarkan apa" << endl;
+					cout << "1.askending\n";
+					cout << "2.deskending\n";
+					cout << "pilihan :";
+					cin >> pilih2;
+					cout << endl;
+
+					if(pilih2 == 1){
+							cout << "Menggunakan metode apa??" << endl;
+							cout << "1.bubble sort\n";
+							cout << "2.quik sort\n";
+							cout << "pilih :";
+							cin >> pilih3;
+							cout << endl;
+
+							switch(pilih3) {
+								case 1: {
+									bubbleSortA();
+    								lihatData();
+    								break;
+								}
+								case 2: {
+									quickSortAsc(head, getTail(head));
+									simpanData();
+									lihatData();
+									 break;
+								}
+								 default:{
+                   				 cout << "Metode tidak ada!\n";
+								 }
+							}
+						}
+					else if(pilih2 == 2){
+							cout << "Menggunakan metode apa??" << endl;
+							cout << "1.bubble sort\n";
+							cout << "2.quik sort\n";
+							cout << "pilih :";
+							cin >> pilih3;
+							cout << endl;
+
+							switch(pilih3) {
+								case 1: {
+									bubbleSortD();
+									lihatData();
+    								break;
+								}
+								case 2: {
+									quickSortDesc(head, getTail(head));
+									simpanData();
+									lihatData();
+									 break;
+								}
+								 default:
+                   				 cout << "Metode tidak ada!\n";
+							}
+						}
+					else{
+						cout << "menu tidak ada!!\n";
+					}
+					
+					if (kembali()) {
+    				break;
+					}
+
+					}while(pilih2 != 0);
+				} 
 			else if (pilih == 6) {
 				simpanData(); // simpan ke file
 				cout << endl;
@@ -207,6 +361,143 @@
 
 		} while (pilih != 0);
 
-		return 0;
-	}
+}
+
+bool kembali() {
+    char pilih;
+    cout << "Kembali ke menu utama? (y/t): ";
+    cin >> pilih;
+    return (pilih == 'y');
+}
+
+void bubbleSortA() {
+    if (head == NULL || head->next == NULL) {
+        cout << "Data tidak cukup untuk diurutkan.\n";
+        return;
+    }
+
+    bool tukar;
+
+    do {
+        tukar = false;
+        Mahasiswa *temp = head;
+
+        while (temp->next != NULL) {
+
+            // urut berdasarkan NIM (ascending)
+            if (temp->nim > temp->next->nim) {
+
+                // simpan data node sekarang
+                string nim = temp->nim;
+                string nama = temp->nama;
+                char jenis_kelamin = temp->jenis_kelamin;
+                string domisili = temp->domisili;
+                string email = temp->email;
+                string nohp = temp->nohp;
+                float ipk = temp->ipk;
+
+                // pindahkan data next ke node sekarang
+                temp->nim = temp->next->nim;
+                temp->nama = temp->next->nama;
+                temp->jenis_kelamin = temp->next->jenis_kelamin;
+                temp->domisili = temp->next->domisili;
+                temp->email = temp->next->email;
+                temp->nohp = temp->next->nohp;
+                temp->ipk = temp->next->ipk;
+
+                // pindahkan data lama ke node next
+                temp->next->nim = nim;
+                temp->next->nama = nama;
+                temp->next->jenis_kelamin = jenis_kelamin;
+                temp->next->domisili = domisili;
+                temp->next->email = email;
+                temp->next->nohp = nohp;
+                temp->next->ipk = ipk;
+
+                tukar = true;
+            }
+
+            temp = temp->next;
+        }
+
+    } while (tukar);
+
+    simpanData(); // supaya file ikut terurut
+    cout << "Data berhasil diurutkan berdasarkan NIM (ascending).\n";
+}
 	
+void bubbleSortD() {
+    if (head == NULL || head->next == NULL) {
+        cout << "Data tidak cukup untuk diurutkan.\n";
+        return;
+    }
+
+    bool tukar;
+
+    do {
+        tukar = false;
+        Mahasiswa *temp = head;
+
+        while (temp->next != NULL) {
+
+            // urut berdasarkan NIM (descending)
+            if (temp->nim < temp->next->nim) {
+
+                // simpan data node sekarang
+                string nim = temp->nim;
+                string nama = temp->nama;
+                char jenis_kelamin = temp->jenis_kelamin;
+                string domisili = temp->domisili;
+                string email = temp->email;
+                string nohp = temp->nohp;
+                float ipk = temp->ipk;
+
+                // pindahkan data next ke node sekarang
+                temp->nim = temp->next->nim;
+                temp->nama = temp->next->nama;
+                temp->jenis_kelamin = temp->next->jenis_kelamin;
+                temp->domisili = temp->next->domisili;
+                temp->email = temp->next->email;
+                temp->nohp = temp->next->nohp;
+                temp->ipk = temp->next->ipk;
+
+                // pindahkan data lama ke node next
+                temp->next->nim = nim;
+                temp->next->nama = nama;
+                temp->next->jenis_kelamin = jenis_kelamin;
+                temp->next->domisili = domisili;
+                temp->next->email = email;
+                temp->next->nohp = nohp;
+                temp->next->ipk = ipk;
+
+                tukar = true;
+            }
+
+            temp = temp->next;
+        }
+
+    } while (tukar);
+
+    simpanData(); // supaya file ikut terurut
+    cout << "Data berhasil diurutkan berdasarkan NIM (descending).\n";
+}
+
+void quickSortAsc(Mahasiswa* low, Mahasiswa* high) {
+    if (high != NULL && low != high && low != high->next) {
+
+        Mahasiswa* p = partitionAsc(low, high);
+
+        quickSortAsc(low, p->prev);
+        quickSortAsc(p->next, high);
+    	}
+	}
+
+void quickSortDesc(Mahasiswa* low, Mahasiswa* high) {
+    if (high != NULL && low != high && low != high->next) {
+
+        Mahasiswa* p = partitionDesc(low, high);
+
+        quickSortDesc(low, p->prev);
+        quickSortDesc(p->next, high);
+    }
+}
