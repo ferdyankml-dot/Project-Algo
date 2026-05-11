@@ -154,26 +154,32 @@
 		}
 
 		cout << endl;
-		cout << "==============================================================" << endl;
+		cout << "=====================================================================================================" << endl;
 		cout << left << setw(5) << "No"
 			 << setw(15) << "nim"
 			 << setw(20) << "nama"
 			 << setw(5) << "JK"
+			 << setw(15) << "Domisili"
+			 << setw(20) << "Email"
+			 << setw(15) << "No Tlpn"
 			 << setw(10) << "ipk" << endl;
-		cout << "==============================================================" << endl;
+		cout << "=====================================================================================================" << endl;
 
 		while (temp != NULL) {
 			cout << left << setw(5) << nomer//temp->no
 				 << setw(15) << temp->nim
 				 << setw(20) << temp->nama
 				 << setw(5) << temp->jenis_kelamin
+				 << setw(15) << temp->domisili 
+				 << setw(20) << temp->email 
+				 << setw(15) << temp->nohp
 				 << setw(10) << temp->ipk << endl;
 
 			temp = temp->next;
 			nomer++;
 		}
 
-		cout << "==============================================================" << endl;
+		cout << "=====================================================================================================" << endl;
 	}
 
 
@@ -183,6 +189,8 @@
 	void quickSortAsc(Mahasiswa* low, Mahasiswa* high);
 	void quickSortDesc(Mahasiswa* low, Mahasiswa* high);
 	bool kembali();
+	void cariData();
+	void hapusData();
 
 	//fungsi quic sort asc
 	Mahasiswa* partitionAsc(Mahasiswa* low, Mahasiswa* high) {
@@ -278,6 +286,16 @@
 				cout << "===== DATA MAHASISWA =====" << endl;
 				lihatData();
 			}
+			else if (pilih == 3) {
+                cout << endl;
+                cout << "===== HAPUS DATA MAHASISWA =====" << endl;
+                hapusData();
+            }
+            else if (pilih == 5) {
+                cout << endl;
+                cout << "===== CARI DATA MAHASISWA =====" << endl;
+                cariData();
+            }
 			else if (pilih == 4) {
 				do{
 					cout << "\n==== URUTKAN DATA ====" << endl;
@@ -500,4 +518,91 @@ void quickSortDesc(Mahasiswa* low, Mahasiswa* high) {
         quickSortDesc(low, p->prev);
         quickSortDesc(p->next, high);
     }
+}
+
+void cariData() {
+    if (head == NULL) {
+        cout << "Data masih kosong." << endl;
+        return;
+    }
+
+    int pilihan;
+    string keyword;
+    cout << "Cari berdasarkan:" << endl;
+    cout << "1. NIM" << endl;
+    cout << "2. Nama" << endl;
+    cout << "Pilih: ";
+    cin >> pilihan;
+    cout << "Masukkan kata kunci: ";
+    cin.ignore();
+    getline(cin, keyword);
+
+    Mahasiswa *temp = head;
+    bool ditemukan = false;
+
+    cout << endl;
+    cout << "======================= HASIL PENCARIAN =======================" << endl;
+    
+    while (temp != NULL) {
+        bool match = false;
+        if (pilihan == 1 && temp->nim == keyword) match = true;
+        else if (pilihan == 2 && temp->nama.find(keyword) != string::npos) match = true;
+
+        if (match) {
+            cout << "NIM           : " << temp->nim << endl;
+            cout << "Nama          : " << temp->nama << endl;
+            cout << "Jenis Kelamin : " << temp->jenis_kelamin << endl;
+            cout << "Domisili      : " << temp->domisili << endl;
+            cout << "IPK           : " << temp->ipk << endl;
+            cout << "--------------------------------------------------------" << endl;
+            ditemukan = true;
+        }
+        temp = temp->next;
+    }
+
+    if (!ditemukan) {
+        cout << "Data tidak ditemukan." << endl;
+    }
+}
+
+
+void hapusData() {
+    if (head == NULL) {
+        cout << "Data kosong, tidak ada yang bisa dihapus." << endl;
+        return;
+    }
+
+    string targetNim;
+    cout << "Masukkan NIM mahasiswa yang akan dihapus: ";
+    cin >> targetNim;
+
+    Mahasiswa *temp = head;
+    while (temp != NULL && temp->nim != targetNim) {
+        temp = temp->next;
+    }
+
+    if (temp == NULL) {
+        cout << "Data dengan NIM " << targetNim << " tidak ditemukan." << endl;
+        return;
+    }
+
+    // Jika node yang dihapus adalah head
+    if (temp == head) {
+        head = head->next;
+        if (head != NULL) head->prev = NULL;
+    } 
+    // Jika node yang dihapus adalah tail
+    else if (temp == tail) {
+        tail = tail->prev;
+        if (tail != NULL) tail->next = NULL;
+    } 
+    // Jika di tengah-tengah
+    else {
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+    }
+
+    delete temp;
+    simpanData(); // Update file setelah hapus
+    cout << "Data mahasiswa dengan NIM " << targetNim << " berhasil dihapus." << endl;
 }
