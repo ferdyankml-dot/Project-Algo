@@ -6,7 +6,6 @@
 2|124250018|ferdian|l|vsvs|bahg@gmail|3.4|4
 1|124250009|baharjos|l|cilacap|bahar@gmail.com|083104724091|3.9
 13|123456789|laras|p|jogja|ras@gmail.com|0987654321|3.5
-11|122223444|ferdyan|l|bantul|ferd@gmail.com|0987654321|2.7
 9|122222|bahar|l|cilacap|baha@gmail.com|929292929|4
 8|100999222|rakan|p|klaten|kan@gmail.com|0987654321|3.3
 7|100222222|cita|p|bandung|taa@gmail.com|0987654321|3.9
